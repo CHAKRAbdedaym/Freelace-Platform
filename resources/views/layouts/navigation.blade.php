@@ -64,19 +64,26 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
+    @auth
+        <x-dropdown-link :href="route('profile.edit')">
+            {{ __('Profile') }}
+        </x-dropdown-link>
 
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault(); this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <x-dropdown-link :href="route('logout')"
+                onclick="event.preventDefault(); this.closest('form').submit();">
+                {{ __('Log Out') }}
+            </x-dropdown-link>
+        </form>
+    @endauth
+
+    @guest
+        <x-dropdown-link :href="route('login')">
+            {{ __('Log In') }}
+        </x-dropdown-link>
+    @endguest
+</x-slot>
                 </x-dropdown>
             </div>
 
@@ -136,19 +143,27 @@
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
+    @auth
+        <x-responsive-nav-link :href="route('profile.edit')">
+            {{ __('Profile') }}
+        </x-responsive-nav-link>
 
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <x-responsive-nav-link :href="route('logout')"
-                        onclick="event.preventDefault(); this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <x-responsive-nav-link :href="route('logout')"
+                onclick="event.preventDefault(); this.closest('form').submit();">
+                {{ __('Log Out') }}
+            </x-responsive-nav-link>
+        </form>
+    @endauth
+
+    @guest
+        <x-responsive-nav-link :href="route('login')">
+            {{ __('Log In') }}
+        </x-responsive-nav-link>
+    @endguest
+</div>
+
         </div>
     </div>
 </nav>
