@@ -17,8 +17,13 @@ class Gig extends Model
         'price',
         'thumbnail',
     ];
-    
-    
+
+    protected $appends = ['average_rating'];
+
+    public function getAverageRatingAttribute()
+    {
+        return $this->reviews_avg_rating ?? 0;
+    }
 
     public function user()
     {
@@ -29,8 +34,9 @@ class Gig extends Model
     {
         return $this->hasMany(Order::class);
     }
-    
 
-
-
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

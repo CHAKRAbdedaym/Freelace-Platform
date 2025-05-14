@@ -15,11 +15,33 @@ class GigController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+   public function index(Request $request)
 {
-    $gigs = Gig::latest()->paginate(9);
+    $query = Gig::query();
+
+    // Search by title or description
+    if ($search = $request->input('search')) {
+        $query->where(function ($q) use ($search) {
+            $q->where('title', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
+    }
+
+    // Sort by price
+    if ($sort = $request->input('sort_price')) {
+        if (in_array($sort, ['asc', 'desc'])) {
+            $query->orderBy('price', $sort);
+        }
+    }
+
+    $gigs = $query->latest()->get(); // You can also paginate if you want
+
     return view('gigs.index', compact('gigs'));
 }
+
+
+
+
 
 
     /**
@@ -131,6 +153,11 @@ public function store(Request $request)
                 ->file('thumbnail')
                 ->store('gigs', 'public');
         }
+
+        else {
+    // Keep the old thumbnail manually
+    $validated['thumbnail'] = $gig->thumbnail;
+}
 
         // Update the gig
         $gig->update($validated);

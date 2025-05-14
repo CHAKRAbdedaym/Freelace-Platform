@@ -78,5 +78,10 @@ public function isClient()
     return $this->role === 'client';
 }
 
+public function reviews()
+{
+    return $this->hasMany(Review::class);
+}
+
 
 }

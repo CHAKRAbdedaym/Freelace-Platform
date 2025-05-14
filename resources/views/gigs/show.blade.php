@@ -21,9 +21,14 @@
                 @endif
 
                 <!-- Gig Description -->
-                <div class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-                    {{ $gig->description }}
-                </div>
+                <div 
+    class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3" 
+    style="margin: 1rem 0; word-break: break-word;"
+>
+    
+    {{ $gig->description }}
+</div>
+
 
                 <!-- Price -->
                 <div class="text-lg font-semibold text-indigo-600 dark:text-indigo-300 mb-4">
@@ -37,6 +42,8 @@
 
                 <!-- Order Form (if user is authenticated) -->
                 @auth
+
+               @if (auth()->id() !== $gig->user_id)
                     <form action="{{ route('orders.store') }}" method="POST" class="mt-6">
                         @csrf
                         <input type="hidden" name="gig_id" value="{{ $gig->id }}">
@@ -49,6 +56,8 @@
                             Place Order
                         </button>
                     </form>
+                @endif
+
                 @endauth
 
                 <!-- Owner-only actions (Edit and Delete) -->
