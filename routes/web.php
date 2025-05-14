@@ -66,3 +66,6 @@ Route::middleware(['auth', AdminMiddleware::class])
         Route::delete('/users/{user}', [AdminDashboardController::class, 'destroyUser'])->name('users.destroy');
 
     });
+
+Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
+

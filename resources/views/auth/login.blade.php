@@ -5,9 +5,9 @@
     <form method="POST" action="{{ route('login') }}" class="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
         @csrf
 
-        <!-- Email Address -->
+        <!-- Email or Username -->
         <div>
-            <x-input-label for="email" :value="__('Email')" class="text-gray-700" />
+            <x-input-label for="email" :value="__('Email or Username')" class="text-gray-700" />
             <x-text-input id="email" class="block mt-1 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                             type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-600" />
