@@ -18,36 +18,39 @@
     </head>
     <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
 
-        <div class="max-w-7xl mx-auto px-4 py-10">
-            <h1 class="text-4xl font-bold mb-8 text-center">Available Gigs</h1>
+        <div class="max-w-7xl mx-auto px-4 py-14">
+    <h1 class="text-5xl py-2 font-extrabold text-center mb-10 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500">
+      Browse Gigs
+    </h1>
 
-            <!-- Search & Sort -->
-            <form method="GET" action="{{ route('gigs.index') }}" class="mb-10">
-                <div class="w-full flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <input 
-                        type="text" 
-                        name="search" 
-                        value="{{ request('search') }}" 
-                        placeholder="🔍 Search gigs..." 
-                        class="w-full sm:w-[300px] px-5 py-3 rounded-xl border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring-indigo-500 shadow transition"
-                    />
-                    <select 
-                        name="sort_price" 
-                        class="w-full sm:w-[200px] px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white focus:ring-indigo-500 shadow transition"
-                    >
-                        <option value="">Sort by price</option>
-                        <option value="asc" {{ request('sort_price') == 'asc' ? 'selected' : '' }}>Low to High</option>
-                        <option value="desc" {{ request('sort_price') == 'desc' ? 'selected' : '' }}>High to Low</option>
-                    </select>
-                    <button 
-                        type="submit" 
-                        class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 shadow transition"
-                    >
-                        Search
-                    </button>
-                </div>
-            </form>
+    <!-- Search & Sort -->
+    <form method="GET" action="{{ route('gigs.index') }}" class="mb-12">
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+        <input 
+          type="text" 
+          name="search" 
+          value="{{ request('search') }}" 
+          placeholder="🔍 Search gigs..." 
+          class="w-full sm:w-80 px-5 py-3 bg-white/30 backdrop-blur-md dark:bg-gray-800/50 border border-gray-300 dark:border-gray-700 rounded-2xl shadow-inner text-sm focus:ring-2 focus:ring-indigo-500 transition"
+        />
 
+        <select 
+          name="sort_price" 
+          class="w-full sm:w-52 px-4 py-3 bg-white/30 backdrop-blur-md dark:bg-gray-800/50 border border-gray-300 dark:border-gray-700 rounded-2xl text-sm shadow-inner focus:ring-2 focus:ring-indigo-500 transition"
+        >
+          
+          <option value="asc" {{ request('sort_price') == 'asc' ? 'selected' : '' }}>Low to High</option>
+          <option value="desc" {{ request('sort_price') == 'desc' ? 'selected' : '' }}>High to Low</option>
+        </select>
+
+        <button 
+          type="submit" 
+          class="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold rounded-2xl hover:from-indigo-600 hover:to-purple-600 shadow-lg transition"
+        >
+          Search
+        </button>
+      </div>
+    </form>
             <!-- Gigs Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 @forelse ($gigs as $gig)

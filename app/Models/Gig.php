@@ -16,6 +16,7 @@ class Gig extends Model
         'description',
         'price',
         'thumbnail',
+         'featured',
     ];
 
     protected $appends = ['average_rating'];

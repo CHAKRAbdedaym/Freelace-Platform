@@ -28,4 +28,14 @@ class Order extends Model
     {
         return $this->belongsTo(Gig::class);
     }
+public function buyer()
+{
+    return $this->belongsTo(User::class, 'user_id');
+}
+public function seller()
+    {
+        return $this->belongsTo(Gig::class);
+    }
+
+    
 }

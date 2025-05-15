@@ -6,6 +6,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GigController;
 use App\Http\Controllers\OrderController;
 
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminGigController;
+use App\Http\Controllers\Admin\AdminOrderController;
+
+
+
+
+
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Admin\AdminDashboardController;
 
@@ -58,6 +66,12 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+
+Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
+
+
+
+
 Route::middleware(['auth', AdminMiddleware::class])
     ->prefix('admin')
     ->name('admin.')
@@ -65,7 +79,13 @@ Route::middleware(['auth', AdminMiddleware::class])
         Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
         Route::delete('/users/{user}', [AdminDashboardController::class, 'destroyUser'])->name('users.destroy');
 
+        // Add these:
+        Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+        Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
+
+        Route::get('/gigs', [AdminGigController::class, 'index'])->name('gigs.index');
+        Route::delete('/gigs/{gig}', [AdminGigController::class, 'destroy'])->name('gigs.destroy');
+
+        Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
+        Route::delete('/orders/{order}', [AdminOrderController::class, 'destroy'])->name('orders.destroy');
     });
-
-Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
-
