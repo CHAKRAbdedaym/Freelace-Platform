@@ -8,14 +8,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
+
 
 class ProfileController extends Controller
 {
 
     //afficher profile
-    public function show($id)
+    public function show($username)
     {
-        return view('profile.profile', ['id' => $id]);
+        $user = User::where('username', $username)->with(['aboutMe', 'skills','languages'])->firstOrFail();
+        
+        return view('profile.profile', ['id' => $username]);
     }
     /**
      * Display the user's profile form.

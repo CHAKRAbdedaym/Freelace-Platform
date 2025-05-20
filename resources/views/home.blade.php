@@ -15,7 +15,7 @@
             </p>
             <a href="{{ route('gigs.index') }}"
                class="inline-block bg-white text-indigo-700 hover:bg-gray-100 px-8 py-4 rounded-full font-semibold shadow-xl transition duration-300">
-                🚀 Explore Gigs
+                 Explore Gigs
             </a>
         </div>
     </section>

@@ -13,8 +13,9 @@
         <div class="flex flex-col md:flex-row items-center gap-6 bg-white p-6 rounded-2xl shadow-md">
             <img class="w-32 h-32 rounded-full object-cover ring-4 ring-green-500" src="{{ $avatar ?? 'https://via.placeholder.com/150' }}" alt="Profile Picture" />
             <div class="flex-1">
-                <h1 class="text-3xl font-bold inline">{{ $name ?? 'Mohamed Elkhanfaf' }}</h1>
-                <p class="text-lg text-gray-400 mt-1 inline ml-2">{{ '@' . ($id ?? 'edo_thecreator') }}</p>
+                <h1 class="text-3xl font-bold inline">{{ $user->name ?? 'Mohamed Elkhanfaf' }}</h1>
+<p class="text-lg text-gray-400 mt-1 inline ml-2">{{ '@' . ($user->username ?? 'edo_thecreator') }}</p>
+
                 
 <div class="flex items-center">
     <svg class="w-4 h-4 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
@@ -38,7 +39,8 @@
 </div>
 
                 <p class="text-gray-600 text-lg">{{ $tagline ?? 'Laravel Developer | Web Apps & APIs' }}</p>
-                <p class="text-sm text-gray-400 mt-1">Member since {{ $memberSince ?? '2022' }}</p>
+                <p class="text-sm text-gray-400 mt-1">Member since {{ $user->created_at->format('l, F j, Y \a\t g:i A') }}</p>
+
                 
                 <div class="mt-3 flex gap-3">
                     @foreach ($socials ?? ['twitter' => '#', 'linkedin' => '#'] as $platform => $link)
@@ -94,47 +96,51 @@
 
    
 
-            <!-- Skills & Languages -->
+            <!-- Skills and Languages Container (Grid Layout) -->
 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+    
+    <!-- Skills Section -->
     <div class="bg-white p-6 rounded-2xl shadow-lg">
-    <h3 class="text-lg font-semibold mb-3 text-gray-800">Skills</h3>
-    <div class="flex flex-wrap gap-4">
-        @foreach ($skills ?? ['Laravel', 'Vue.js', 'Tailwind CSS', 'MySQL', 'Shopify', 'WordPress'] as $skill)
-            <span class="bg-gradient-to-r from-blue-500 to-teal-500 text-white px-4 py-2 rounded-full text-sm font-medium transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-500 cursor-pointer">
-                Expert in {{ $skill }}
-            </span>
-        @endforeach
+        <h3 class="text-lg font-semibold mb-3 text-gray-800">Skills</h3>
+        <div class="flex flex-wrap gap-4">
+            @foreach ($user->skills ?? [] as $skill)
+                <span class="bg-gradient-to-r from-blue-500 to-teal-500 text-white px-4 py-2 rounded-full text-sm font-medium transform transition duration-300 ease-in-out hover:scale-105 hover:shadow-lg hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-500 cursor-pointer">
+                    {{ $skill->level }} in {{ $skill->name }}
+                </span>
+            @endforeach
+        </div>
     </div>
-</div>
 
     <!-- Languages Section -->
-    <div class="bg-white p-6 rounded-2xl shadow-md">
-        <h3 class="text-lg font-semibold mb-3">Languages</h3>
-        <ul class="list-disc list-inside space-y-4 text-gray-700">
-            @foreach ($languages ?? [
-                ['name' => 'English', 'level' => 'Fluent', 'percentage' => 90],
-                ['name' => 'French', 'level' => 'Native', 'percentage' => 100],
-                ['name' => 'Spanish', 'level' => 'Intermediate', 'percentage' => 60]
-            ] as $lang)
-                <li class="flex items-center space-x-4">
-                    <!-- Language Name -->
-                    <span class="font-medium text-gray-800">{{ $lang['name'] }}</span>
+    <!-- Languages Section -->
+<div class="bg-white p-6 rounded-2xl shadow-md">
+    <h3 class="text-lg font-semibold mb-3">Languages</h3>
+    <ul class="list-disc list-inside space-y-4 text-gray-700">
+        @foreach ($user->languages as $lang)
+            <li class="flex items-center space-x-4">
+                <!-- Language Name -->
+                <span class="font-medium text-gray-800">{{ $lang->name }}</span>
 
-                    <!-- Progress Bar -->
-                    <div class="flex-grow bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                        <!-- Dynamically change the width and color based on level -->
-                        <div class="h-2.5 rounded-full"
-                             style="width: {{ $lang['percentage'] }}%; background-color: {{ $lang['level'] == 'Native' ? '#2f855a' : ($lang['level'] == 'Fluent' ? '#3182ce' : '#e4a639') }}">
-                        </div>
+                <!-- Progress Bar -->
+                <div class="flex-grow bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                    <div class="h-2.5 rounded-full"
+                         style="width: {{ $lang->percentage }}%; background-color: 
+                            {{ 
+                                $lang->level == 'Native' ? '#2f855a' : 
+                                ($lang->level == 'Fluent' ? '#3182ce' : '#e4a639') 
+                            }}">
                     </div>
+                </div>
 
-                    <!-- Level Display to the Right -->
-                    <span class="text-sm font-medium text-gray-500">{{ $lang['level'] }}</span>
-                </li>
-            @endforeach
-        </ul>
-    </div>
+                <!-- Level Display to the Right -->
+                <span class="text-sm font-medium text-gray-500">{{ $lang->level }}</span>
+            </li>
+        @endforeach
+    </ul>
 </div>
+
+</div>
+
 
 
        <!-- Services -->
@@ -204,11 +210,11 @@
         } else if (diffInDays === 1) {
             return 'Posted yesterday';
         } else if (diffInDays < 7) {
-            return `${diffInDays} days ago`;
+            return ${diffInDays} days ago;
         } else if (diffInWeeks < 4) {
-            return `${diffInWeeks} week${diffInWeeks > 1 ? 's' : ''} ago`;
+            return ${diffInWeeks} week${diffInWeeks > 1 ? 's' : ''} ago;
         } else {
-            return `${Math.floor(diffInWeeks / 4)} month${Math.floor(diffInWeeks / 4) > 1 ? 's' : ''} ago`;
+            return ${Math.floor(diffInWeeks / 4)} month${Math.floor(diffInWeeks / 4) > 1 ? 's' : ''} ago;
         }
     }
 
