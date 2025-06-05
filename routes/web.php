@@ -89,3 +89,13 @@ Route::middleware(['auth', AdminMiddleware::class])
         Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
         Route::delete('/orders/{order}', [AdminOrderController::class, 'destroy'])->name('orders.destroy');
     });
+
+    use App\Http\Controllers\MessageController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages/{id}', [MessageController::class, 'show'])->name('messages.show');
+    Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::match(['get', 'post'], '/messages/start/{user_id}', [MessageController::class, 'startConversation'])->name('messages.start');
+
+});

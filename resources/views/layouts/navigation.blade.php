@@ -12,9 +12,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
-                    </x-nav-link>
+                    </x-nav-link> --}}
+
+                    <x-nav-link :href="route('home')">
+                                {{ __('Home Page') }}
+                            </x-nav-link>
+
 
                     <x-nav-link :href="route('gigs.index')" :active="request()->routeIs('gigs.index')">
                         {{ __('Browse Gigs') }}
@@ -22,9 +27,19 @@
 
                     @auth
                         @if (auth()->user()->role === 'client' )
+
                             <x-nav-link :href="route('orders.index')">
                                 {{ __('My Orders') }}
                             </x-nav-link>
+
+                             <x-nav-link :href="route('messages.index')">
+                                {{ __('My Messages') }}
+                            </x-nav-link>
+
+                            
+
+
+
                         @elseif (auth()->user()->role === 'freelancer')
 
                             <x-nav-link :href="route('orders.sales')">
@@ -38,6 +53,11 @@
                             <x-nav-link :href="route('gigs.create')">
                                 {{ __('Post a Gig') }}
                             </x-nav-link>
+
+                           <x-nav-link :href="route('messages.index')">
+                                {{ __('My Messages') }}
+                            </x-nav-link>
+
 
 
                         @elseif (auth()->user()->role === 'admin')
@@ -117,6 +137,11 @@
                     <x-responsive-nav-link :href="route('orders.index')">
                         {{ __('My Orders') }}
                     </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('messages.index')">
+                        {{ __('My Messages') }}
+                    </x-responsive-nav-link>
+
                 @elseif (auth()->user()->role === 'freelancer')
                     <x-responsive-nav-link :href="route('orders.sales')">
                         {{ __('My Sales') }}
@@ -124,6 +149,10 @@
 
                     <x-responsive-nav-link :href="route('orders.index')">
                         {{ __('My Orders') }}
+                    </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('messages.index')">
+                        {{ __('My Messages') }}
                     </x-responsive-nav-link>
 
 

@@ -38,6 +38,21 @@
                 Posted by: <span class="font-medium">{{ $gig->user->name ?? 'Unknown' }}</span>
             </p>
 
+
+
+<div class="text-center text-sm text-gray-500 dark:text-gray-400 mb-8">
+            @auth
+    @if(auth()->id() !== $gig->user_id)
+        <a href="{{ route('messages.start', ['user_id' => $gig->user_id]) }}"
+            class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            Message Seller
+        </a>
+    @endif
+@endauth
+
+</div>
+
+
             <!-- Order Form -->
             @auth
                 @if (auth()->id() !== $gig->user_id)
