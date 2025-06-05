@@ -64,6 +64,11 @@
                             <x-nav-link :href="route('admin.dashboard')">
                                 {{ __('Admin Dashboard') }}
                             </x-nav-link>
+
+                            <x-nav-link :href="route('messages.index')">
+                                {{ __('My Messages') }}
+                            </x-nav-link>
+
                         @endif
                     @endauth
                 </div>
@@ -160,6 +165,12 @@
                     <x-responsive-nav-link :href="route('admin.dashboard')">
                         {{ __('Admin Dashboard') }}
                     </x-responsive-nav-link>
+
+                     <x-responsive-nav-link :href="route('messages.index')">
+                        {{ __('My Messages') }}
+                    </x-responsive-nav-link>
+
+                    
                 @endif
             @endauth
         </div>

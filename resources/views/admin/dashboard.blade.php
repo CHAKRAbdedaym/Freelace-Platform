@@ -59,30 +59,40 @@
 
         // Most Popular Gigs
         new Chart(document.getElementById('popularGigsChart'), {
-            type: 'bar',
-            data: {
-                labels: @json($popularGigs->pluck('title')),
-                datasets: [{
-                    label: 'Orders',
-                    data: @json($popularGigs->pluck('orders_count')),
-                    backgroundColor: '#6366f1'
-                }]
+    type: 'bar',
+    data: {
+        labels: @json($popularGigs->pluck('title')), // titles are still used internally
+        datasets: [{
+            data: @json($popularGigs->pluck('orders_count')),
+            backgroundColor: '#6366f1'
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            x: {
+                ticks: {
+                    display: false //  hides the gig titles on X-axis
+                },
+                grid: {
+                    display: false // optional: hides grid lines on X-axis
+                }
             },
-            options: { responsive: true,
-    scales: {
-        y: {
-            ticks: {
-                precision: 0, // No decimals
-                callback: function(value) {
-                    if (Number.isInteger(value)) return value;
+            y: {
+                ticks: {
+                    precision: 0,
+                    callback(value) {
+                        if (Number.isInteger(value)) return value;
+                    }
                 }
             }
+        },
+        plugins: {
+            legend: { display: false },
+            title: { display: false }
         }
-    },
-    plugins: {
-        legend: { display: false }
-    } }
-        });
+    }
+});
 
         // Revenue Chart
         new Chart(document.getElementById('revenueChart'), {
